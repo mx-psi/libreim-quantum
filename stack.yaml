@@ -1,0 +1,13 @@
+resolver: lts-10.0
+
+extra-deps:
+  - github: mx-psi/quipper
+    commit: "HEAD"
+  - easyrender-0.1.1.4
+  - newsynth-0.3.0.5
+  - set-monad-0.1.0.0
+  - fixedprec-0.2.2.2
+  - superdoc-0.1.2.9
+
+ghc-options:
+  "$locals": -F -pgmF "quipper/convert_template.sh"

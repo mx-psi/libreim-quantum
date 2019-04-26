@@ -1,0 +1,45 @@
+name:                quantum-algorithms
+version:             0.1.0.0
+github:              "mx-psi/quantum-algorithms"
+license:             BSD3
+author:              "Pablo Baeyens"
+maintainer:          "pbaeyens@correo.ugr.com"
+copyright:           "2019 Pablo Baeyens"
+
+extra-source-files:
+- README.md
+
+description:         Please see the README on GitHub at <https://github.com/mx-psi/quantum-algorithms#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- quipperlib == 0.1.0.0
+- directory >= 1.1
+- containers >=0.5 && < 0.7
+
+library:
+  source-dirs: src
+
+executables:
+  deutsch:
+    main:   Main.hs
+    source-dirs:
+    - deutsch
+    - src
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - quantum-algorithms
+  diagrams:
+    main:  Main.hs
+    source-dirs:
+    - diagrams
+    - src
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - quantum-algorithms

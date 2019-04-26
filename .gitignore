@@ -1,5 +1,7 @@
 dist
 dist-*
+*.cabal
+*.pdf
 cabal-dev
 *.o
 *.hi
