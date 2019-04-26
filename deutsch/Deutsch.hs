@@ -23,22 +23,22 @@ data OracleType =
 -- | Implements the Deustch algorithm.
 --  Given an oracle computes the circuit of Deutsch algorithm
 -- (see generalized version at `deustchJozsa`)
-deutsch :: ((Qubit,Qubit) -> Circ (Qubit,Qubit)) -> Circ Bit
+deutsch :: ((Qubit, Qubit) -> Circ (Qubit, Qubit)) -> Circ Bit
 deutsch oracle = do
   -- Initialize x (to False) and y (to True)
-  (x,y) <- qinit (False,True)
+  (x, y) <- qinit (False, True)
 
   -- Apply Hadamard gates to each qubit
-  (x,y) <- map_hadamard (x,y)
+  (x, y) <- map_hadamard (x, y)
 
   -- Apply oracle
-  (x,y) <- oracle (x,y)
+  (x, y) <- oracle (x, y)
 
   -- Apply Hadamard gate again to x
-  x <- map_hadamard x
+  x      <- map_hadamard x
 
   -- Measure and discard
-  z <- measure x
+  z      <- measure x
   qdiscard y
 
   pure z
@@ -49,7 +49,7 @@ deutsch oracle = do
 deutschJozsa :: (QShape ba qa ca) => Oracle qa -> Circ ca
 deutschJozsa oracle = do
   -- Initialize x (to False) and y (to True)
-  (x, y) <- qinit $ (qc_false (shape oracle), True)
+  (x, y) <- qinit (qc_false (shape oracle), True)
 
   -- Apply Hadamard gates to each qubit
   (x, y) <- map_hadamard (x, y)

@@ -55,11 +55,11 @@ getHandle = do
 main :: IO ()
 main = do
   -- Read Truth table from appropiate handle
-  handle <- getHandle
+  handle   <- getHandle
   contents <- hGetContents handle
 
   case decodeOracle contents of
-    Left err -> reportErr err -- there has been an error
+    Left  err    -> reportErr err -- there has been an error
     Right oracle -> do
       -- Preview the circuit
       captureTo "deutsch.pdf" $ print_generic PDF (deutschJozsa oracle)

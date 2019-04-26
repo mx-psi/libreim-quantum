@@ -25,7 +25,7 @@ toffoli (x, y, z) = do
 -- | The (simulated) NAND gate
 nand :: (Qubit, Qubit) -> Circ Qubit
 nand (x, y) = do
-  a           <- qinit True
+  a         <- qinit True
   (x, y, a) <- toffoli (x, y, a)
   qdiscard (x, y)
   pure a
@@ -59,7 +59,7 @@ andCirc (x, y) = nand (x, y) >>= notCirc
 
 
 build_circuit
-boolean_xnor (x,y) = (not x || y) &&  (x || not y)
+boolean_xnor (x, y) = (not x || y) && (x || not y)
 
-xnor :: (Qubit,Qubit) -> Circ Qubit
+xnor :: (Qubit, Qubit) -> Circ Qubit
 xnor = unpack template_boolean_xnor
