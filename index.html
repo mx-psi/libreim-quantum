@@ -412,7 +412,7 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <a class="sourceLine" id="cb3-4" data-line-number="4">  (x,y,z) <span class="ot">&lt;-</span> toffoli (x,y,z)</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">  qdiscard (x,y)</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">  pure z</a></code></pre></div>
-<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Clasical.hs</a></span></p>
+<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Classical.hs</a></span></p>
 </div>
 <div>
 <p><img data-src="img/nand.png" /></p>
@@ -430,7 +430,7 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <a class="sourceLine" id="cb4-5" data-line-number="5">  (x,y,z) <span class="ot">&lt;-</span> toffoli (x,y,z)</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6">  qdiscard y</a>
 <a class="sourceLine" id="cb4-7" data-line-number="7">  pure (x, z)</a></code></pre></div>
-<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Clasical.hs</a></span></p>
+<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Classical.hs</a></span></p>
 </div>
 <div>
 <p><img data-src="img/fanout.png" /></p>
@@ -446,24 +446,48 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <a class="sourceLine" id="cb5-3" data-line-number="3">  (x,x&#39;) <span class="ot">&lt;-</span> fanout x</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">  y <span class="ot">&lt;-</span> nand (x,x&#39;)</a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">  pure y</a></code></pre></div>
-<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Clasical.hs</a></span></p>
+<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Classical.hs</a></span></p>
 </div>
 <div>
 <p><img data-src="img/not.png" /></p>
 </div>
 </div>
+</section><section id="entrelazamiento" class="slide level2">
+<h2>Entrelazamiento</h2>
+<div class="twocol">
+<div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ot">bellPair ::</span> <span class="dt">Circ</span> (<span class="dt">Qubit</span>, <span class="dt">Qubit</span>)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">bellPair <span class="fu">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  (x, y, z) <span class="ot">&lt;-</span> qinit (<span class="dt">True</span>, <span class="dt">False</span>, <span class="dt">False</span>)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  hadamard y</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">  toffoli (x, y, z)</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">  qterm <span class="dt">True</span> x</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">  pure (y, z)</a></code></pre></div>
+</div>
+<div>
+<p><img data-src="img/bell.png" /></p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Vemos aquí el estilo imperativo, que también es posible.</li>
+<li>Creamos una pareja entrelazada.</li>
+<li>Es un ejemplo de circuito sin entradas</li>
+<li>Podemos ejecutarlo en <code>diagrams</code>.</li>
+</ul>
+</aside>
 </section><section id="generación-de-circuitos" class="slide level2">
 <h2>Generación de circuitos</h2>
 <p>Podemos generar circuitos automáticamente a partir de funciones booleanas.</p>
 <div class="twocol">
 <div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" data-line-number="1">build_circuit</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">boolean_xnor (x,y) <span class="fu">=</span> </a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">  (not x <span class="fu">||</span> y) <span class="fu">&amp;&amp;</span>  (x <span class="fu">||</span> not y)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="ot">xnor ::</span> (<span class="dt">Qubit</span>,<span class="dt">Qubit</span>) <span class="ot">-&gt;</span> <span class="dt">Circ</span> <span class="dt">Qubit</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">xnor <span class="fu">=</span> unpack template_boolean_xnor</a></code></pre></div>
-<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Clasical.hs</a></span></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb7-1" data-line-number="1">build_circuit</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">boolean_xnor (x,y) <span class="fu">=</span> </a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">  (not x <span class="fu">||</span> y) <span class="fu">&amp;&amp;</span>  (x <span class="fu">||</span> not y)</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="ot">xnor ::</span> (<span class="dt">Qubit</span>,<span class="dt">Qubit</span>) <span class="ot">-&gt;</span> <span class="dt">Circ</span> <span class="dt">Qubit</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">xnor <span class="fu">=</span> unpack template_boolean_xnor</a></code></pre></div>
+<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Classical.hs</a></span></p>
 </div>
 <div>
 <p><img data-src="img/xnor.png" /></p>
@@ -480,42 +504,42 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <p><img data-src="img/deutsch.png" /></p>
 </section><section class="slide level2">
 
-<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ot">deutsch ::</span> ((<span class="dt">Qubit</span>,<span class="dt">Qubit</span>) <span class="ot">-&gt;</span> <span class="dt">Circ</span> (<span class="dt">Qubit</span>,<span class="dt">Qubit</span>)) <span class="ot">-&gt;</span> <span class="dt">Circ</span> <span class="dt">Bit</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">deutsch oracle <span class="fu">=</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">  (x,y) <span class="ot">&lt;-</span> qinit (<span class="dt">False</span>,<span class="dt">True</span>)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">  (x,y) <span class="ot">&lt;-</span> map_hadamard (x,y)</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">  (x,y) <span class="ot">&lt;-</span> oracle (x,y)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">  x <span class="ot">&lt;-</span> map_hadamard x</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">  z <span class="ot">&lt;-</span> measure x</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">  qdiscard y</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">  pure z</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ot">deutsch ::</span> ((<span class="dt">Qubit</span>,<span class="dt">Qubit</span>) <span class="ot">-&gt;</span> <span class="dt">Circ</span> (<span class="dt">Qubit</span>,<span class="dt">Qubit</span>)) <span class="ot">-&gt;</span> <span class="dt">Circ</span> <span class="dt">Bit</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">deutsch oracle <span class="fu">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">  (x,y) <span class="ot">&lt;-</span> qinit (<span class="dt">False</span>,<span class="dt">True</span>)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">  (x,y) <span class="ot">&lt;-</span> map_hadamard (x,y)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">  (x,y) <span class="ot">&lt;-</span> oracle (x,y)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">  x <span class="ot">&lt;-</span> map_hadamard x</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">  z <span class="ot">&lt;-</span> measure x</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">  qdiscard y</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">  pure z</a></code></pre></div>
 <p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/deutsch/Deutsch.hs">Deutsch.hs</a></span></p>
 </section><section id="qshape" class="slide level2">
 <h2><code>QShape</code></h2>
 <p>La clase de tipos <code>QShape</code> generaliza</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">instance</span> <span class="dt">QShape</span> <span class="dt">Bool</span> <span class="dt">Bit</span> <span class="dt">Qubit</span> <span class="kw">where</span> </a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="fu">...</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw">instance</span> <span class="dt">QShape</span> ba ca qa <span class="ot">=&gt;</span> <span class="dt">QShape</span> [ba] [ca] [qa] <span class="kw">where</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="fu">...</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">instance</span> <span class="dt">QShape</span> <span class="dt">Bool</span> <span class="dt">Bit</span> <span class="dt">Qubit</span> <span class="kw">where</span> </a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="fu">...</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="kw">instance</span> <span class="dt">QShape</span> ba ca qa <span class="ot">=&gt;</span> <span class="dt">QShape</span> [ba] [ca] [qa] <span class="kw">where</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="fu">...</span></a></code></pre></div>
 </section><section id="el-algoritmo-de-deutsch-jozsa" class="slide level2">
 <h2>El algoritmo de Deutsch-Jozsa</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">data</span> <span class="dt">Oracle</span> qa <span class="fu">=</span> <span class="dt">Oracle</span> {</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="ot">  shape   ::</span> qa,</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="ot">  circuit ::</span> (qa,<span class="dt">Qubit</span>) <span class="ot">-&gt;</span> <span class="dt">Circ</span> (qa,<span class="dt">Qubit</span>)</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">  }</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">data</span> <span class="dt">Oracle</span> qa <span class="fu">=</span> <span class="dt">Oracle</span> {</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="ot">  shape   ::</span> qa,</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="ot">  circuit ::</span> (qa,<span class="dt">Qubit</span>) <span class="ot">-&gt;</span> <span class="dt">Circ</span> (qa,<span class="dt">Qubit</span>)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">  }</a></code></pre></div>
 <p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/src/Oracle.hs">Oracle.hs</a></span></p>
 </section><section class="slide level2">
 
-<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="ot">deutschJozsa ::</span> (<span class="dt">QShape</span> ba qa ca) <span class="ot">=&gt;</span> <span class="dt">Oracle</span> qa <span class="ot">-&gt;</span> <span class="dt">Circ</span> ca</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">deutschJozsa oracle <span class="fu">=</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">  (x, y) <span class="ot">&lt;-</span> qinit <span class="fu">$</span> (qc_false (shape oracle), <span class="dt">True</span>)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">  (x, y) <span class="ot">&lt;-</span> map_hadamard (x, y)</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">  (x, y) <span class="ot">&lt;-</span> boxedOracle (x, y)</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">  x      <span class="ot">&lt;-</span> map_hadamard x</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">  z      <span class="ot">&lt;-</span> measure x</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">  qdiscard y</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">  pure z</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="ot">deutschJozsa ::</span> (<span class="dt">QShape</span> ba qa ca) <span class="ot">=&gt;</span> <span class="dt">Oracle</span> qa <span class="ot">-&gt;</span> <span class="dt">Circ</span> ca</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">deutschJozsa oracle <span class="fu">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">  (x, y) <span class="ot">&lt;-</span> qinit <span class="fu">$</span> (qc_false (shape oracle), <span class="dt">True</span>)</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">  (x, y) <span class="ot">&lt;-</span> map_hadamard (x, y)</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">  (x, y) <span class="ot">&lt;-</span> boxedOracle (x, y)</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">  x      <span class="ot">&lt;-</span> map_hadamard x</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">  z      <span class="ot">&lt;-</span> measure x</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">  qdiscard y</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">  pure z</a></code></pre></div>
 <p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/deutsch/Deutsch.hs">Deutsch.hs</a></span></p>
 </section></section>
 <section><section id="fin" class="title-slide slide level1"><h1>Fin</h1></section><section id="referencias" class="slide level2">

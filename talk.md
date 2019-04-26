@@ -380,7 +380,7 @@ nand (x,y) = do
   qdiscard (x,y)
   pure z
 ```
-<span style="font-size:0.5em">[Clasical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
+<span style="font-size:0.5em">[Classical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
 :::
 :::{}
 ![](img/nand.png)
@@ -402,7 +402,7 @@ fanout x = do
   qdiscard y
   pure (x, z)
 ```
-<span style="font-size:0.5em">[Clasical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
+<span style="font-size:0.5em">[Classical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
 :::
 :::{}
 ![](img/fanout.png)
@@ -421,12 +421,38 @@ notCirc x = do
   y <- nand (x,x')
   pure y
 ```
-<span style="font-size:0.5em">[Clasical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
+<span style="font-size:0.5em">[Classical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
 :::
 :::{}
 ![](img/not.png)
 :::
 ::::
+
+## Entrelazamiento
+
+::::{.twocol}
+:::{}
+```haskell
+bellPair :: Circ (Qubit, Qubit)
+bellPair = do
+  (x, y, z) <- qinit (True, False, False)
+  hadamard y
+  toffoli (x, y, z)
+  qterm True x
+  pure (y, z)
+```
+:::
+:::{}
+![](img/bell.png)
+:::
+::::
+
+<aside class="notes">
+- Vemos aquí el estilo imperativo, que también es posible.
+- Creamos una pareja entrelazada.
+- Es un ejemplo de circuito sin entradas
+- Podemos ejecutarlo en `diagrams`.
+</aside>
 
 ## Generación de circuitos
 
@@ -442,7 +468,7 @@ boolean_xnor (x,y) =
 xnor :: (Qubit,Qubit) -> Circ Qubit
 xnor = unpack template_boolean_xnor
 ```
-<span style="font-size:0.5em">[Clasical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
+<span style="font-size:0.5em">[Classical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
 :::
 :::{}
 ![](img/xnor.png)
