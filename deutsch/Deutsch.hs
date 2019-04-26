@@ -5,7 +5,7 @@ Author: Pablo Baeyens
 -}
 
 module Deutsch(
-  deustchJozsa
+  deutschJozsa
   ,getType
   ) where
 
