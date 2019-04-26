@@ -10,6 +10,8 @@ Una vez hecho esto puede ejecutarse `stack build` para instalar y compilar.
 Ejecución
 =========
 
+Para ejecutar un programa el comando a ejecutar es `stack exec <nombre>`.
+
 `diagrams`
 -------------
 
