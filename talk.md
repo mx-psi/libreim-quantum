@@ -7,6 +7,10 @@ theme: white
 
 # Instalación
 
+1. Instalar [`stack`](https://docs.haskellstack.org/en/stable/README/)
+2. Clonar [`mx-psi/libreim-quantum`](https://github.com/mx-psi/libreim-quantum)
+3. Hacer `stack build`
+
 # Computación clásica
 
 ## El espacio de estados
@@ -122,6 +126,7 @@ Es *uniforme* si la función $n \mapsto C_n$ es computable.
 
 <aside class="notes">
 - Su tamaño es la función $t(n) = |C_n|$.
+- El objetivo de la complejidad clasica es medir el número de puertas necesarias para calcular una función (por ejemplo, que resuelva un problema de decisión)
 - Sin uniformidad podemos definir una sucesión que resuelva un problema indecidible (!).
 - Un lenguaje está en $\mathsf{P}$ si existe una familia uniforme de circuitos de tamaño polinomial que calcula $1_L$.
 </aside>
@@ -241,7 +246,8 @@ Hay conjuntos «universales» y finitos de puertas que aproximan cualquier otra 
 - Unitaria significa que respeta el producto escalar o que su inversa sea su transpuesta conjugada.
 - Que respete el producto escalar significa que respeta la norma 2, luego es equivalente en cierto sentido a las matrices estocásticas que veíamos antes.
 - Un circuito se define, de nuevo, exactamente igual y su función asociada se computa exactamente igual.
-- El teorema de Solovay-Kitaev nos dice que cualquier conjuntos
+- El teorema de Solovay-Kitaev nos dice que cualquier conjunto que genere un conjunto denso lo hace de forma «rápida».
+- En términos de computabilidad no hay diferencia (podemos hacer simulaciones exponenciales). Con cuaterniones sale igual!
 </aside>
 
 ## Medición
