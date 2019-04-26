@@ -107,19 +107,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="fragment">
 <ol type="1">
-<li>Instalar <a href="https://docs.haskellstack.org/en/stable/README/"><code>stack</code></a></li>
-<li>Clonar <a href="https://github.com/mx-psi/libreim-quantum"><code>mx-psi/libreim-quantum</code></a></li>
-<li>Hacer <code>stack build</code></li>
+<li>Instalar <a href="https://docs.haskellstack.org/en/stable/README/"><code>stack</code></a>,</li>
+<li>clonar <a href="https://github.com/mx-psi/libreim-quantum"><code>mx-psi/libreim-quantum</code></a> y</li>
+<li>ejecutar <code>stack build</code></li>
 </ol>
 </div>
 </section>
 <section><section id="computación-clásica" class="title-slide slide level1"><h1>Computación clásica</h1></section><section id="el-espacio-de-estados" class="slide level2">
 <h2>El espacio de estados</h2>
 <p>Un ordenador clásico hace cálculos con símbolos.</p>
-<div class="examples">
+<div class="example">
 <p>Un <strong>bit</strong> es un elemento del espacio de estados <span class="math inline">\(\mathbb{B} := \{0,1\}\)</span>.</p>
 </div>
-<p>Podemos manipular un estado con varios bits. Si tenemos <span class="math inline">\(n\)</span> bits, el espacio de estados es <span class="math inline">\(\mathbb{B}^n\)</span>.</p>
+<p>Podemos manipular un estado con varios bits.</p>
+<p>Con <span class="math inline">\(n\)</span> bits, el espacio de estados es <span class="math inline">\(\mathbb{B}^n\)</span>.</p>
 <aside class="notes">
 <ul>
 <li>Explicar <span class="math inline">\(\mathbb{B}^n\)</span>.</li>
@@ -127,10 +128,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Codificamos los problemas de la forma usual</li>
 </ul>
 </aside>
-</section><section id="qué-es-una-puerta-clásica" class="slide level2">
-<h2>¿Qué es una puerta clásica?</h2>
+</section><section id="puertas-clásicas" class="slide level2">
+<h2>Puertas clásicas</h2>
 <div class="definition">
-<p>Una <em>puerta clásica</em> es una función <span class="math inline">\(f: \mathbb{B}^n \to \mathbb{B}^m\)</span>.</p>
+<p>Una <strong>puerta clásica</strong> es una función <span class="math inline">\(f: \mathbb{B}^n \to \mathbb{B}^m\)</span>.</p>
 <ul>
 <li><span class="math inline">\(n\)</span> es el número de <strong>entradas</strong> y</li>
 <li><span class="math inline">\(m\)</span> es el número de <strong>salidas</strong>.</li>
@@ -139,23 +140,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="example">
 <p><span class="math display">\[\operatorname{NAND}(x,y) = \operatorname{NOT}(\operatorname{AND}(x,y))\]</span></p>
 </div>
-</section><section id="puertas-inusuales" class="slide level2">
-<h2>Puertas inusuales</h2>
-<p>FANOUT: 1 entrada y 2 salidas, <span class="math display">\[\operatorname{FANOUT}(x) = (x,x).\]</span></p>
-<p>ANCILLA<span class="math inline">\(_x\)</span>: 0 entradas y 1 salida, <span class="math display">\[\operatorname{ANCILLA}_x(\varepsilon) = x.\]</span></p>
-<p>DESCARTA: 1 entrada y 0 salidas, <span class="math display">\[\operatorname{DESCARTA}(x) = \varepsilon.\]</span></p>
-</section><section id="qué-es-un-circuito" class="slide level2">
-<h2>¿Qué es un circuito?</h2>
+</section><section id="otras-puertas" class="slide level2">
+<h2>Otras puertas</h2>
+<div class="definition">
+<p><strong>FANOUT</strong>: 1 entrada y 2 salidas, <span class="math display">\[\operatorname{FANOUT}(x) = (x,x).\]</span></p>
+<p><strong>ANCILLA</strong><span class="math inline">\(_x\)</span>: 0 entradas y 1 salida, <span class="math display">\[\operatorname{ANCILLA}_x(\varepsilon) = x.\]</span></p>
+<p><strong>DESCARTA</strong>: 1 entrada y 0 salidas, <span class="math display">\[\operatorname{DESCARTA}(x) = \varepsilon.\]</span></p>
+</div>
+</section><section id="circuitos" class="slide level2">
+<h2>Circuitos</h2>
 <div class="definition">
 <p>Un <em>circuito</em> es un grafo dirigido acíclico etiquetado</p>
 <ul>
 <li>cada nodo es entrada, salida o una puerta,</li>
-<li>cada entrada y salida están asociadas con exactamente un vértice.</li>
+<li>entradas y salidas se asocian con un vértice cada una.</li>
 <li>el grado de entrada y salida de un vértice coincide con el de su etiqueta.</li>
 </ul>
 </div>
-<p>Tiene una función <span class="math inline">\(C:\mathbb{B}^n \to \mathbb{B}^m\)</span> asociada.</p>
-<p><span class="math inline">\(|C|\)</span> es su número de nodos.</p>
+<div class="fragment">
+<ul>
+<li><p>Tiene una función <span class="math inline">\(C:\mathbb{B}^n \to \mathbb{B}^m\)</span> asociada.</p></li>
+<li><p><span class="math inline">\(|C|\)</span> es su número de nodos.</p></li>
+</ul>
 <aside class="notes">
 <p>Específicamente,</p>
 <ol type="1">
@@ -168,14 +174,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Podemos medir aparte del tamaño, la «profundidad», que sirve para el paralelismo.</li>
 </ul>
 </aside>
+</div>
 </section><section id="conjunto-universal" class="slide level2">
 <h2>Conjunto universal</h2>
 <div class="definition">
-<p>Un conjunto de puertas <span class="math inline">\(\mathcal{B}\)</span> es <em>universal</em> si toda función es la función asociada a un circuito cuyas puertas pertenecen a <span class="math inline">\(\mathcal{B}\)</span>.</p>
+<p><span class="math inline">\(\mathcal{B}\)</span> es <em>universal</em> si toda función es la función asociada a un circuito con puertas en <span class="math inline">\(\mathcal{B}\)</span>.</p>
 </div>
 <div class="fragment">
 <div class="example">
-<p><span class="math inline">\(\mathcal{B} = \{\operatorname{OR},\operatorname{AND},\operatorname{FANOUT}\}\)</span> <strong>no</strong> es universal; ningún circuito calcula NOT.</p>
+<p><span class="math inline">\(\mathcal{B} = \{\operatorname{OR},\operatorname{AND},\operatorname{FANOUT}\}\)</span> <strong>no</strong> es universal</p>
 </div>
 </div>
 <div class="fragment">
@@ -184,27 +191,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <aside class="notes">
 <ul>
-<li>Los circuitos respecto de esa base se llaman <em>monótonos</em>.</li>
+<li>Los circuitos respecto de esa base se llaman <em>monótonos</em>. No pueden calcular NOT.</li>
 <li>La clase <span class="math inline">\(\mathsf{AC}^0\)</span> se define a partir de circuitos monótonos; algunos teoremas relativizados pueden transformarse en teoremas no relativizados de esta clase.</li>
 <li>La clasificación completa de las posibles bases viene dada por el retículo de Post. </asides></li>
 </ul>
 </div>
-</section><section id="toffoli" class="slide level2">
-<h2>Toffoli</h2>
+</section><section id="reversibilidad" class="slide level2">
+<h2>Reversibilidad</h2>
 <div class="definition">
 <p>La puerta <em>Toffoli</em> se define <span class="math display">\[\operatorname{TOFFOLI}(x,y,z) = (x,y,z \oplus (x \cdot y))\]</span></p>
 </div>
 <div class="proposition">
-<p>La puerta lógica de Toffoli junto con las puertas ancilla y la puerta DESCARTA forma una base universal.</p>
+<p><span class="math inline">\(\{\operatorname{TOFFOLI}, \operatorname{ANCILLA}_{x}, \operatorname{DESCARTA}\}\)</span> es universal.</p>
 </div>
 <aside class="notes">
 <ul>
 <li><span class="math inline">\(\oplus\)</span> es la operación XOR</li>
+<li>La puerta de Toffoli es reversible!</li>
 </ul>
 </aside>
 </section><section id="familias-de-circuitos" class="slide level2">
 <h2>Familias de circuitos</h2>
-<p>Cuando necesitamos tener una entrada de tamaño arbitrario, consideramos una familia de circuitos <span class="math inline">\(\mathcal{C} = \{C_n\}_{n \in \mathbb{N}}\)</span> tal que <span class="math inline">\(C_n\)</span> tiene <span class="math inline">\(n\)</span> entradas.</p>
+<p>Cuando necesitamos tener una entrada de tamaño arbitrario, consideramos una familia de circuitos <span class="math inline">\(\mathcal{C} = \{C_n\}_{n \in \mathbb{N}}\)</span>, tal que <span class="math inline">\(C_n\)</span> tiene <span class="math inline">\(n\)</span> entradas.</p>
 <p>Su función asociada es <span class="math inline">\(\mathcal{C}(x) = C_{|x|}(x)\)</span>.</p>
 <p>Es <em>uniforme</em> si la función <span class="math inline">\(n \mapsto C_n\)</span> es computable.</p>
 <aside class="notes">
@@ -231,8 +239,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>El objeto unidad de la categoría sirve como <span class="math inline">\(R^{\otimes 0}\)</span>.</li>
 </ul>
 </aside>
-</section><section id="qué-es-una-puerta-probabilística" class="slide level2">
-<h2>¿Qué es una puerta probabilística?</h2>
+</section><section id="puertas-probabilísticas" class="slide level2">
+<h2>Puertas probabilísticas</h2>
 <div class="definition">
 <p>Una <em>puerta</em> es una aplicación lineal <span class="math inline">\(f: R^{\otimes n} \to R^{\otimes m}\)</span> que lleva vectores de norma 1 en vectores de norma 1.</p>
 <p>Viene dada por una matriz estocástica.</p>
@@ -247,22 +255,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>(!)</strong>: Un circuito se define exactamente igual</li>
 </ul>
 </aside>
-</section><section id="circuitos" class="slide level2">
+</section><section id="circuitos-1" class="slide level2">
 <h2>Circuitos</h2>
 <p>La definición de circuito es análoga al caso clásico.</p>
-<p>Si aplicamos <span class="math inline">\(f\)</span> a un subsistema y <span class="math inline">\(g\)</span> a otro, aplicamos su producto tensorial <span class="math inline">\(f \otimes g\)</span> al sistema completo.</p>
-<p><em>Ver ejemplo en pizarra</em></p>
+<p>Para calcular la función asociada a un circuito:</p>
+<ol type="1">
+<li>escogemos un orden topológico de las puertas,</li>
+<li>extendemos a la dimensión adecuada y</li>
+<li>componemos en orden inverso.</li>
+</ol>
+<div class="fragment">
+<p>La función es invariante al orden topológico ya que <span class="math display">\[(f \otimes g) \circ (h \otimes s) = (f \circ h) \otimes (g \circ s).\]</span></p>
 <aside class="notes">
 <ul>
 <li>Hacer ejemplo en pizarra.</li>
 <li>Explicar producto de Kronecker.</li>
 <li>Un buen ejemplo es random(0.1,0.9) → fanout → not en un cable y nada en el otro.</li>
+<li>La independencia del orden topológico se sigue de la identidad</li>
 </ul>
 </aside>
+</div>
 </section><section id="clásica-a-probabilística" class="slide level2">
 <h2>Clásica a probabilística</h2>
-<p>Toda puerta clásica tiene una puerta probabilística asociada: su extensión lineal. Su matriz es una matriz de permutación.</p>
-<p>Nos restringimos a circuitos formados por NAND, FANOUT y RANDOM.</p>
+<p>Toda puerta clásica tiene una probabilística asociada: su extensión lineal. Su matriz es una matriz de permutación.</p>
+<p>Nos restringimos a circuitos formados por <span class="math display">\[\{\operatorname{NAND}, \operatorname{FANOUT}, \operatorname{RANDOM}\}.\]</span></p>
 <aside class="notes">
 En principio los circuitos con matrices estocásticas arbitrarias podrían permitirnos calcular funciones no computables, codificando en la probabilidad la información no computable.
 </aside>
@@ -270,7 +286,9 @@ En principio los circuitos con matrices estocásticas arbitrarias podrían permi
 <h2>Medición y error</h2>
 <p>La salida de un circuito probabilístico será un vector de probabilidades que muestreamos.</p>
 <div class="fragment">
+<div class="definition">
 <p><span class="math inline">\(C: R^{\otimes n} \to R^{\otimes m}\)</span> calcula <span class="math inline">\(f: \mathbb{B}^n \to \mathbb{B}^m\)</span> si <span class="math display">\[P[C(x) = f(x)] \geq \frac23\]</span></p>
+</div>
 <aside class="notes">
 <ul>
 <li>El vector de probabilidades tendrá longitud <span class="math inline">\(2^n\)</span>.</li>
@@ -281,11 +299,11 @@ En principio los circuitos con matrices estocásticas arbitrarias podrían permi
 </section></section>
 <section><section id="computación-cuántica" class="title-slide slide level1"><h1>Computación cuántica</h1></section><section id="el-espacio-de-estados-2" class="slide level2">
 <h2>El espacio de estados</h2>
-<p>En cuántica, el espacio de estados es un espacio de Hilbert separable complejo.</p>
+<p>El espacio de estados es un espacio de Hilbert separable complejo.</p>
 <div class="example">
-<p>Un <strong>qubit</strong> es un vector unitario de un espacio vectorial complejo con base ortonormal <span class="math inline">\(\{|0\rangle,|1\rangle\}\)</span>, <span class="math display">\[|\psi\rangle = \alpha |0\rangle + \beta |1\rangle\qquad |\alpha|^2 + |\beta|^2 = 1\]</span> <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span> son las <strong>amplitudes</strong> de <span class="math inline">\(|\psi\rangle\)</span>.</p>
+<p>Un <strong>qubit</strong> es un vector unitario de un espacio vectorial complejo con base ortonormal <span class="math inline">\(\{|0\rangle,|1\rangle\}\)</span>, <span class="math display">\[|\psi\rangle = \alpha |0\rangle + \beta |1\rangle, \qquad |\alpha|^2 + |\beta|^2 = 1\]</span> <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span> son las <strong>amplitudes</strong> de <span class="math inline">\(|\psi\rangle\)</span>.</p>
 </div>
-<p>Si tenemos <span class="math inline">\(n\)</span> qubits, el espacio de estados es <span class="math inline">\(Q^{\otimes n}\)</span>.</p>
+<p>Con <span class="math inline">\(n\)</span> qubits, el espacio de estados es <span class="math inline">\(Q^{\otimes n}\)</span>.</p>
 <aside class="notes">
 <ul>
 <li>Explicar qué es un espacio de Hilbert (y que en el caso finito pueden pensar simplemente en que tiene un producto escalar).</li>
@@ -299,7 +317,9 @@ En principio los circuitos con matrices estocásticas arbitrarias podrían permi
 <div class="example">
 <p>La puerta de Hadamard se define <span class="math display">\[H|x\rangle = \frac{1}{\sqrt{2}}(|0\rangle + (-1)^x|1\rangle)\]</span></p>
 </div>
+<div class="proposition">
 <p>Hay conjuntos «universales» y finitos de puertas que aproximan cualquier otra puerta.</p>
+</div>
 <aside class="notes">
 <ul>
 <li>Unitaria significa que respeta el producto escalar o que su inversa sea su transpuesta conjugada.</li>
@@ -311,14 +331,14 @@ En principio los circuitos con matrices estocásticas arbitrarias podrían permi
 </aside>
 </section><section id="medición" class="slide level2">
 <h2>Medición</h2>
-<p>La salida de un circuito cuántico será un vector unitario. Si medimos <span class="math display">\[|\psi\rangle = \sum_{i = 0}^{2^n-1} \alpha_i|i\rangle\]</span> tenemos <span class="math display">\[P(\operatorname{Medición}|\psi\rangle = i) = |\alpha_i|^2\]</span></p>
+<p>La salida de un circuito cuántico será un vector unitario. Si medimos <span class="math display">\[|\psi\rangle = \sum_{i = 0}^{2^n-1} \alpha_i|i\rangle\]</span> tenemos <span class="math display">\[P(\operatorname{Meas}|\psi\rangle = i) = |\alpha_i|^2\]</span></p>
 <aside class="notes">
 <ul>
 <li>Podemos medir de otras formas que no comentamos aquí; nos basta con esta.</li>
 <li>La calculabilidad se define igual que en el caso probabilístico.</li>
 </ul>
 </aside>
-</section><section id="puertas-clásicas" class="slide level2">
+</section><section id="puertas-clásicas-1" class="slide level2">
 <h2>Puertas clásicas</h2>
 <p>Cualquier puerta clásica reversible es unitaria y podemos simular aleatoriedad con la puerta de Hadamard.</p>
 <p>Llevamos una función <span class="math inline">\(f:\mathbb{B}^n \to \mathbb{B}^m\)</span> a otra <span class="math display">\[(x,y) \mapsto (x, y \oplus f(x)).\]</span></p>
@@ -343,10 +363,10 @@ En principio los circuitos con matrices estocásticas arbitrarias podrían permi
 <p>Quipper trata con 3 tipos de datos</p>
 <dl>
 <dt><code>Bool</code></dt>
-<dd>Es el tipo de los <strong>parámetros</strong> (se conocen en tiempo de generación)
+<dd>Tipo de los <strong>parámetros</strong> (se conocen en tiempo de generación)
 </dd>
 <dt><code>Bit</code> y <code>Qubit</code></dt>
-<dd>Es el tipo de las <strong>entradas</strong> y <strong>salidas</strong> clásicas y cuánticas (se conocen en tiempo de ejecución).
+<dd>Tipo de <strong>entradas</strong> clásicas y cuánticas (se conocen en tiempo de ejecución).
 </dd>
 </dl>
 <p>Todas las operaciones ocurren en una mónada <code>Circ</code>.</p>
@@ -381,7 +401,7 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <p><img data-src="img/toffoli.png" /></p>
 </div>
 </div>
-</section><section id="puertas-clásicas-1" class="slide level2">
+</section><section id="puertas-clásicas-2" class="slide level2">
 <h2>Puertas clásicas</h2>
 <p>Por ejemplo, podemos definir <code>nand</code> utilizando estas operaciones</p>
 <div class="twocol">

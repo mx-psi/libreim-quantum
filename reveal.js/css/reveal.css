@@ -8,6 +8,7 @@
 /*********************************************
  * RESET STYLES
  *********************************************/
+
 html, body, .reveal div, .reveal span, .reveal applet, .reveal object, .reveal iframe,
 .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6, .reveal p, .reveal blockquote, .reveal pre,
 .reveal a, .reveal abbr, .reveal acronym, .reveal address, .reveal big, .reveal cite, .reveal code,
@@ -1389,5 +1390,60 @@ body {
 .twocol{
   display: grid;
   align-items: center;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 60% 40%;
+}
+
+/**************************
+* BLOCKS
+***************************/
+
+div .example, div .definition, div .proposition {
+  position: relative;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  margin-top: 10px;
+  margin-left: 0.4em;
+  margin-right: 0.4em;
+}
+
+div .example {
+  border: 1px solid #d4e9d4;
+  background-color: honeydew;
+}
+
+div .definition{
+  border: 1px solid #c0c0d1;
+  background-color: ghostwhite;
+}
+
+div .proposition{
+  border: 1px solid #e0c99c;
+  background-color: floralwhite;
+}
+
+.example:before{
+  position: absolute;
+  top:5px;
+  left:10px;
+  content:"Ejemplo";
+  color: green;
+  font-size: 0.4em;
+}
+
+.definition:before{
+  position: absolute;
+  top:5px;
+  left:10px;
+  content:"Definición";
+  color: gray;
+  font-size: 0.4em;
+}
+
+.proposition:before{
+  position: absolute;
+  top:5px;
+  left:10px;
+  content:"Proposición";
+  color: burlywood;
+  font-size: 0.4em;
 }

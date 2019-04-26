@@ -13,9 +13,9 @@ theme: white
 
 . . .
 
-1. Instalar [`stack`](https://docs.haskellstack.org/en/stable/README/)
-2. Clonar [`mx-psi/libreim-quantum`](https://github.com/mx-psi/libreim-quantum)
-3. Hacer `stack build`
+1. Instalar [`stack`](https://docs.haskellstack.org/en/stable/README/),
+2. clonar [`mx-psi/libreim-quantum`](https://github.com/mx-psi/libreim-quantum) y 
+3. ejecutar `stack build`
 
 # Computación clásica
 
@@ -23,12 +23,13 @@ theme: white
 
 Un ordenador clásico hace cálculos con símbolos.
 
-:::{.examples}
+:::{.example}
 Un **bit** es un elemento del espacio de estados $\mathbb{B} := \{0,1\}$.
 :::
 
 Podemos manipular un estado con varios bits.
-Si tenemos $n$ bits, el espacio de estados es $\mathbb{B}^n$.
+
+Con $n$ bits, el espacio de estados es $\mathbb{B}^n$.
 
 <aside class="notes">
 - Explicar $\mathbb{B}^n$.
@@ -36,10 +37,10 @@ Si tenemos $n$ bits, el espacio de estados es $\mathbb{B}^n$.
 - Codificamos los problemas de la forma usual
 </aside>
 
-## ¿Qué es una puerta clásica?
+## Puertas clásicas
 
 :::{.definition}
-Una *puerta clásica* es una función $f: \mathbb{B}^n \to \mathbb{B}^m$.
+Una **puerta clásica** es una función $f: \mathbb{B}^n \to \mathbb{B}^m$.
 
 - $n$ es el número de **entradas** y
 - $m$ es el número de **salidas**.
@@ -50,31 +51,34 @@ Una *puerta clásica* es una función $f: \mathbb{B}^n \to \mathbb{B}^m$.
 $$\operatorname{NAND}(x,y) = \operatorname{NOT}(\operatorname{AND}(x,y))$$
 :::
 
-## Puertas inusuales
+## Otras puertas
 
-FANOUT: 1 entrada y 2 salidas,
+:::{.definition}
+**FANOUT**: 1 entrada y 2 salidas,
 $$\operatorname{FANOUT}(x) = (x,x).$$
 
-ANCILLA$_x$: 0 entradas y 1 salida,
+**ANCILLA**$_x$: 0 entradas y 1 salida,
 $$\operatorname{ANCILLA}_x(\varepsilon) = x.$$
 
-DESCARTA: 1 entrada y 0 salidas,
+**DESCARTA**: 1 entrada y 0 salidas,
 $$\operatorname{DESCARTA}(x) = \varepsilon.$$
+:::
 
-## ¿Qué es un circuito?
+## Circuitos
 
 :::{.definition}
 Un *circuito* es un grafo dirigido acíclico etiquetado
 
 - cada nodo es entrada, salida o una puerta,
-- cada entrada y salida están asociadas con exactamente un vértice.
+- entradas y salidas se asocian con un vértice cada una.
 - el grado de entrada y salida de un vértice coincide con el de su etiqueta.
 :::
 
+. . .
 
-Tiene una función $C:\mathbb{B}^n \to \mathbb{B}^m$ asociada.
+- Tiene una función $C:\mathbb{B}^n \to \mathbb{B}^m$ asociada.
 
-$|C|$ es su número de nodos.
+- $|C|$ es su número de nodos.
 
 <aside class="notes">
 Específicamente,
@@ -90,14 +94,13 @@ Específicamente,
 ## Conjunto universal
 
 :::{.definition}
-Un conjunto de puertas $\mathcal{B}$ es *universal* si toda función es la función asociada a un circuito cuyas puertas pertenecen a $\mathcal{B}$.
+$\mathcal{B}$ es *universal* si toda función es la función asociada a un circuito con puertas en $\mathcal{B}$.
 :::
 
 . . .
 
 :::{.example}
-$\mathcal{B} = \{\operatorname{OR},\operatorname{AND},\operatorname{FANOUT}\}$ **no** es universal; 
-ningún circuito calcula NOT.
+$\mathcal{B} = \{\operatorname{OR},\operatorname{AND},\operatorname{FANOUT}\}$ **no** es universal
 :::
 
 . . .
@@ -108,28 +111,29 @@ $\mathcal{B} = \{\operatorname{NAND},\operatorname{FANOUT}\}$ es universal.
 
 
 <aside class="notes">
-- Los circuitos respecto de esa base se llaman *monótonos*.
+- Los circuitos respecto de esa base se llaman *monótonos*. No pueden calcular NOT.
 - La clase $\mathsf{AC}^0$ se define a partir de circuitos monótonos; algunos teoremas relativizados pueden transformarse en teoremas no relativizados de esta clase.
 - La clasificación completa de las posibles bases viene dada por el retículo de Post.
 </asides>
 
-## Toffoli
+## Reversibilidad
 
 :::{.definition}
 La puerta *Toffoli* se define $$\operatorname{TOFFOLI}(x,y,z) = (x,y,z \oplus (x \cdot y))$$
 :::
 
 :::{.proposition}
-La puerta lógica de Toffoli junto con las puertas ancilla y la puerta DESCARTA forma una base universal.
+$\{\operatorname{TOFFOLI}, \operatorname{ANCILLA}_{x}, \operatorname{DESCARTA}\}$  es universal.
 :::
 
 <aside class="notes">
 - $\oplus$ es la operación XOR
+- La puerta de Toffoli es reversible!
 </aside>
 
 ## Familias de circuitos
 
-Cuando necesitamos tener una entrada de tamaño arbitrario, consideramos una familia de circuitos $\mathcal{C} = \{C_n\}_{n \in \mathbb{N}}$ tal que $C_n$ tiene $n$ entradas.
+Cuando necesitamos tener una entrada de tamaño arbitrario, consideramos una familia de circuitos $\mathcal{C} = \{C_n\}_{n \in \mathbb{N}}$, tal que $C_n$ tiene $n$ entradas.
 
 Su función asociada es $\mathcal{C}(x) = C_{|x|}(x)$.
 
@@ -162,7 +166,7 @@ Si tenemos $n$ bits aleatorios, el espacio de estados es $R^{\otimes n}$.
 - El objeto unidad de la categoría sirve como $R^{\otimes 0}$.
 </aside>
 
-## ¿Qué es una puerta probabilística?
+## Puertas probabilísticas
 
 :::{.definition}
 Una *puerta* es una aplicación lineal $f: R^{\otimes n} \to R^{\otimes m}$ que lleva vectores de norma 1 en vectores de norma 1.
@@ -185,23 +189,31 @@ $$\operatorname{RANDOM}(v) = \frac12\begin{pmatrix}1 & 1 \\ 1 & 1\end{pmatrix}v$
 
 La definición de circuito es análoga al caso clásico.
 
-Si aplicamos $f$ a un subsistema y $g$ a otro, aplicamos su producto tensorial $f \otimes g$ al sistema completo.
+Para calcular la función asociada a un circuito:
 
+1. escogemos un orden topológico de las puertas,
+2. extendemos a la dimensión adecuada y
+3. componemos en orden inverso.
 
-*Ver ejemplo en pizarra*
+. . .
+
+La función es invariante al orden topológico ya que
+$$(f \otimes g) \circ (h \otimes s) = (f \circ h) \otimes (g \circ s).$$
 
 <aside class="notes">
 - Hacer ejemplo en pizarra.
 - Explicar producto de Kronecker.
 - Un buen ejemplo es random(0.1,0.9) → fanout → not en un cable y nada en el otro.
+- La independencia del orden topológico se sigue de la identidad
 </aside>
 
 ## Clásica a probabilística
 
-Toda puerta clásica tiene una puerta probabilística asociada: su extensión lineal.
+Toda puerta clásica tiene una probabilística asociada: su extensión lineal.
 Su matriz es una matriz de permutación.
 
-Nos restringimos a circuitos formados por NAND, FANOUT y RANDOM.
+Nos restringimos a circuitos formados por
+$$\{\operatorname{NAND}, \operatorname{FANOUT}, \operatorname{RANDOM}\}.$$
 
 <aside class="notes">
 En principio los circuitos con matrices estocásticas arbitrarias podrían permitirnos calcular funciones no computables, codificando en la probabilidad la información no computable.
@@ -213,8 +225,10 @@ La salida de un circuito probabilístico será un vector de probabilidades que m
 
 .  . .
 
+:::{.definition}
 $C: R^{\otimes n} \to R^{\otimes m}$ calcula $f: \mathbb{B}^n \to \mathbb{B}^m$ si
 $$P[C(x) = f(x)] \geq \frac23$$
+:::
 
 <aside class="notes">
 - El vector de probabilidades tendrá longitud $2^n$.
@@ -225,15 +239,15 @@ $$P[C(x) = f(x)] \geq \frac23$$
 
 ## El espacio de estados
 
-En cuántica, el espacio de estados es un espacio de Hilbert separable complejo.
+El espacio de estados es un espacio de Hilbert separable complejo.
 
 :::{.example}
 Un **qubit** es un vector unitario de un espacio vectorial complejo con base ortonormal $\{|0\rangle,|1\rangle\}$,
-$$|\psi\rangle = \alpha |0\rangle + \beta |1\rangle\qquad |\alpha|^2 + |\beta|^2 = 1$$
+$$|\psi\rangle = \alpha |0\rangle + \beta |1\rangle, \qquad |\alpha|^2 + |\beta|^2 = 1$$
 $\alpha$ y $\beta$ son las **amplitudes** de $|\psi\rangle$.
 :::
 
-Si tenemos $n$ qubits, el espacio de estados es $Q^{\otimes n}$.
+Con $n$ qubits, el espacio de estados es $Q^{\otimes n}$.
 
 <aside class="notes">
 - Explicar qué es un espacio de Hilbert (y que en el caso finito pueden pensar simplemente en que tiene un producto escalar).
@@ -251,7 +265,9 @@ La puerta de Hadamard se define
 $$H|x\rangle = \frac{1}{\sqrt{2}}(|0\rangle + (-1)^x|1\rangle)$$ 
 :::
 
+:::{.proposition}
 Hay conjuntos «universales» y finitos de puertas que aproximan cualquier otra puerta.
+:::
 
 <aside class="notes">
 - Unitaria significa que respeta el producto escalar o que su inversa sea su transpuesta conjugada.
@@ -267,7 +283,7 @@ La salida de un circuito cuántico será un vector unitario.
 Si medimos 
 $$|\psi\rangle = \sum_{i = 0}^{2^n-1} \alpha_i|i\rangle$$ 
 tenemos
-$$P(\operatorname{Medición}|\psi\rangle = i) = |\alpha_i|^2$$
+$$P(\operatorname{Meas}|\psi\rangle = i) = |\alpha_i|^2$$
 
 <aside class="notes">
 - Podemos medir de otras formas que no comentamos aquí; nos basta con esta.
@@ -303,10 +319,10 @@ Distinguimos 3 etapas
 Quipper trata con 3 tipos de datos
 
 `Bool`
-: Es el tipo de los **parámetros** (se conocen en tiempo de generación)
+: Tipo de los **parámetros** (se conocen en tiempo de generación)
 
 `Bit` y `Qubit`
-: Es el tipo de las **entradas** y **salidas** clásicas y cuánticas (se conocen en tiempo de ejecución).
+: Tipo de **entradas** clásicas y cuánticas (se conocen en tiempo de ejecución).
 
 Todas las operaciones ocurren en una mónada `Circ`.
 
