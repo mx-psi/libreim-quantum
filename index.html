@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="author" content="@mx_psi@mstdn.io">
+  <meta name="author" content="@mx_psi(@mstdn.io)">
   <title>Programando ordenadores cuánticos</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -97,10 +97,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="title-slide">
   <h1 class="title">Programando ordenadores cuánticos</h1>
-  <p class="author"><span class="citation" data-cites="mx_psi">@mx_psi</span><span class="citation" data-cites="mstdn.io">@mstdn.io</span></p>
+  <p class="author"><span style="text-transform:lowercase"><a href="https://twitter.com/mx_psi"><span class="citation" data-cites="mx_psi"><span class="citation" data-cites="mx_psi">@mx_psi</span></span></a>(<a href="http://mstdn.io/@mx_psi"><span class="citation" data-cites="mstdn.io"><span class="citation" data-cites="mstdn.io">@mstdn.io</span></span></a>)</span></p>
 </section>
 
-<section id="instalación" class="title-slide slide level1"><h1>Instalación</h1></section>
+<section id="instalación" class="slide level2">
+<h2>Instalación</h2>
+<div style="font-size:1.2em">
+<p><a href="https://mx-psi.github.io/libreim-quantum"><code>mx-psi.github.io/libreim-quantum</code></a></p>
+</div>
+<div class="fragment">
+<ol type="1">
+<li>Instalar <a href="https://docs.haskellstack.org/en/stable/README/"><code>stack</code></a></li>
+<li>Clonar <a href="https://github.com/mx-psi/libreim-quantum"><code>mx-psi/libreim-quantum</code></a></li>
+<li>Hacer <code>stack build</code></li>
+</ol>
+</div>
+</section>
 <section><section id="computación-clásica" class="title-slide slide level1"><h1>Computación clásica</h1></section><section id="el-espacio-de-estados" class="slide level2">
 <h2>El espacio de estados</h2>
 <p>Un ordenador clásico hace cálculos con símbolos.</p>
@@ -111,7 +123,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <aside class="notes">
 <ul>
 <li>Explicar <span class="math inline">\(\mathbb{B}^n\)</span>.</li>
-<li>Podemos trabajar con más de dos símbolos.</li>
+<li>Podemos trabajar con más de dos símbolos</li>
+<li>Codificamos los problemas de la forma usual</li>
 </ul>
 </aside>
 </section><section id="qué-es-una-puerta-clásica" class="slide level2">
@@ -151,8 +164,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>si <span class="math inline">\(v \in V\)</span> es una salida, <span class="math inline">\(\operatorname{deg}_{\operatorname{in}}(v) = 1\)</span> y <span class="math inline">\(\operatorname{deg}_{\operatorname{out}}(v) = 0\)</span>.</li>
 </ol>
 <ul>
-<li><p>En principio las funciones asociadas a las puertas podrían no ser simétricas y habría que añadir también una ordenación de las aristas que inciden en cada puerta (omitimos esto en la definición)</p></li>
-<li>No especificamos qué son las puertas; en el futuro serán otras cosas.</li>
+<li>En principio las funciones asociadas a las puertas podrían no ser simétricas y habría que añadir también una ordenación de las aristas que inciden en cada puerta (omitimos esto en la definición)</li>
+<li>Podemos medir aparte del tamaño, la «profundidad», que sirve para el paralelismo.</li>
 </ul>
 </aside>
 </section><section id="conjunto-universal" class="slide level2">
@@ -172,6 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <aside class="notes">
 <ul>
 <li>Los circuitos respecto de esa base se llaman <em>monótonos</em>.</li>
+<li>La clase <span class="math inline">\(\mathsf{AC}^0\)</span> se define a partir de circuitos monótonos; algunos teoremas relativizados pueden transformarse en teoremas no relativizados de esta clase.</li>
 <li>La clasificación completa de las posibles bases viene dada por el retículo de Post. </asides></li>
 </ul>
 </div>
@@ -183,6 +197,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="proposition">
 <p>La puerta lógica de Toffoli junto con las puertas ancilla y la puerta DESCARTA forma una base universal.</p>
 </div>
+<aside class="notes">
+<ul>
+<li><span class="math inline">\(\oplus\)</span> es la operación XOR</li>
+</ul>
+</aside>
 </section><section id="familias-de-circuitos" class="slide level2">
 <h2>Familias de circuitos</h2>
 <p>Cuando necesitamos tener una entrada de tamaño arbitrario, consideramos una familia de circuitos <span class="math inline">\(\mathcal{C} = \{C_n\}_{n \in \mathbb{N}}\)</span> tal que <span class="math inline">\(C_n\)</span> tiene <span class="math inline">\(n\)</span> entradas.</p>
@@ -342,6 +361,7 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ot">wire ::</span> <span class="dt">Qubit</span> <span class="ot">-&gt;</span> <span class="dt">Circ</span> <span class="dt">Qubit</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">wire x <span class="fu">=</span> <span class="kw">do</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">  pure x</a></code></pre></div>
+<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Clasical.hs</a></span></p>
 </div>
 <div>
 <p><img data-src="img/wire.png" /></p>
@@ -372,6 +392,7 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <a class="sourceLine" id="cb3-4" data-line-number="4">  (x,y,z) <span class="ot">&lt;-</span> toffoli (x,y,z)</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">  qdiscard (x,y)</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">  pure z</a></code></pre></div>
+<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Clasical.hs</a></span></p>
 </div>
 <div>
 <p><img data-src="img/nand.png" /></p>
@@ -389,6 +410,7 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <a class="sourceLine" id="cb4-5" data-line-number="5">  (x,y,z) <span class="ot">&lt;-</span> toffoli (x,y,z)</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6">  qdiscard y</a>
 <a class="sourceLine" id="cb4-7" data-line-number="7">  pure (x, z)</a></code></pre></div>
+<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Clasical.hs</a></span></p>
 </div>
 <div>
 <p><img data-src="img/fanout.png" /></p>
@@ -404,6 +426,7 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <a class="sourceLine" id="cb5-3" data-line-number="3">  (x,x&#39;) <span class="ot">&lt;-</span> fanout x</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">  y <span class="ot">&lt;-</span> nand (x,x&#39;)</a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">  pure y</a></code></pre></div>
+<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Clasical.hs</a></span></p>
 </div>
 <div>
 <p><img data-src="img/not.png" /></p>
@@ -420,6 +443,7 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <a class="sourceLine" id="cb6-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"><span class="ot">xnor ::</span> (<span class="dt">Qubit</span>,<span class="dt">Qubit</span>) <span class="ot">-&gt;</span> <span class="dt">Circ</span> <span class="dt">Qubit</span></a>
 <a class="sourceLine" id="cb6-6" data-line-number="6">xnor <span class="fu">=</span> unpack template_boolean_xnor</a></code></pre></div>
+<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs">Clasical.hs</a></span></p>
 </div>
 <div>
 <p><img data-src="img/xnor.png" /></p>
@@ -436,8 +460,8 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <p><img data-src="img/deutsch.png" /></p>
 </section><section class="slide level2">
 
-<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ot">deustch ::</span> ((<span class="dt">Qubit</span>,<span class="dt">Qubit</span>) <span class="ot">-&gt;</span> <span class="dt">Circ</span> (<span class="dt">Qubit</span>,<span class="dt">Qubit</span>)) <span class="ot">-&gt;</span> <span class="dt">Circ</span> <span class="dt">Bit</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">deustch oracle <span class="fu">=</span> <span class="kw">do</span></a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ot">deutsch ::</span> ((<span class="dt">Qubit</span>,<span class="dt">Qubit</span>) <span class="ot">-&gt;</span> <span class="dt">Circ</span> (<span class="dt">Qubit</span>,<span class="dt">Qubit</span>)) <span class="ot">-&gt;</span> <span class="dt">Circ</span> <span class="dt">Bit</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">deutsch oracle <span class="fu">=</span> <span class="kw">do</span></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">  (x,y) <span class="ot">&lt;-</span> qinit (<span class="dt">False</span>,<span class="dt">True</span>)</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">  (x,y) <span class="ot">&lt;-</span> map_hadamard (x,y)</a>
 <a class="sourceLine" id="cb7-5" data-line-number="5">  (x,y) <span class="ot">&lt;-</span> oracle (x,y)</a>
@@ -445,6 +469,7 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <a class="sourceLine" id="cb7-7" data-line-number="7">  z <span class="ot">&lt;-</span> measure x</a>
 <a class="sourceLine" id="cb7-8" data-line-number="8">  qdiscard y</a>
 <a class="sourceLine" id="cb7-9" data-line-number="9">  pure z</a></code></pre></div>
+<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/deutsch/Deutsch.hs">Deutsch.hs</a></span></p>
 </section><section id="qshape" class="slide level2">
 <h2><code>QShape</code></h2>
 <p>La clase de tipos <code>QShape</code> generaliza</p>
@@ -459,10 +484,11 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="ot">  shape   ::</span> qa,</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="ot">  circuit ::</span> (qa,<span class="dt">Qubit</span>) <span class="ot">-&gt;</span> <span class="dt">Circ</span> (qa,<span class="dt">Qubit</span>)</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">  }</a></code></pre></div>
+<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/src/Oracle.hs">Oracle.hs</a></span></p>
 </section><section class="slide level2">
 
-<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="ot">deustchJozsa ::</span> (<span class="dt">QShape</span> ba qa ca) <span class="ot">=&gt;</span> <span class="dt">Oracle</span> qa <span class="ot">-&gt;</span> <span class="dt">Circ</span> ca</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">deustchJozsa oracle <span class="fu">=</span> <span class="kw">do</span></a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="ot">deutschJozsa ::</span> (<span class="dt">QShape</span> ba qa ca) <span class="ot">=&gt;</span> <span class="dt">Oracle</span> qa <span class="ot">-&gt;</span> <span class="dt">Circ</span> ca</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">deutschJozsa oracle <span class="fu">=</span> <span class="kw">do</span></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">  (x, y) <span class="ot">&lt;-</span> qinit <span class="fu">$</span> (qc_false (shape oracle), <span class="dt">True</span>)</a>
 <a class="sourceLine" id="cb10-4" data-line-number="4">  (x, y) <span class="ot">&lt;-</span> map_hadamard (x, y)</a>
 <a class="sourceLine" id="cb10-5" data-line-number="5">  (x, y) <span class="ot">&lt;-</span> boxedOracle (x, y)</a>
@@ -470,6 +496,7 @@ Podemos convertir un parámetro a una entrada con <code>qinit  :: Bool -&gt; Cir
 <a class="sourceLine" id="cb10-7" data-line-number="7">  z      <span class="ot">&lt;-</span> measure x</a>
 <a class="sourceLine" id="cb10-8" data-line-number="8">  qdiscard y</a>
 <a class="sourceLine" id="cb10-9" data-line-number="9">  pure z</a></code></pre></div>
+<p><span style="font-size:0.5em"><a href="https://github.com/mx-psi/libreim-quantum/blob/master/deutsch/Deutsch.hs">Deutsch.hs</a></span></p>
 </section></section>
 <section><section id="fin" class="title-slide slide level1"><h1>Fin</h1></section><section id="referencias" class="slide level2">
 <h2>Referencias</h2>

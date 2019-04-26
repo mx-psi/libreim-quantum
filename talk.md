@@ -1,11 +1,17 @@
 ---
 title: Programando ordenadores cuánticos
-author: "@mx_psi@mstdn.io"
+author:  <span style="text-transform:lowercase"><a href="https://twitter.com/mx_psi"><span class="citation" data-cites="mx_psi">@mx_psi</span></a>(<a href="http://mstdn.io/@mx_psi"><span class="citation" data-cites="mstdn.io">@mstdn.io</span></a>)</span>
 lang: es
 theme: white
 ---
 
-# Instalación
+## Instalación
+
+<div style="font-size:1.2em">
+[`mx-psi.github.io/libreim-quantum`](https://mx-psi.github.io/libreim-quantum)
+</div>
+
+. . .
 
 1. Instalar [`stack`](https://docs.haskellstack.org/en/stable/README/)
 2. Clonar [`mx-psi/libreim-quantum`](https://github.com/mx-psi/libreim-quantum)
@@ -26,7 +32,8 @@ Si tenemos $n$ bits, el espacio de estados es $\mathbb{B}^n$.
 
 <aside class="notes">
 - Explicar $\mathbb{B}^n$.
-- Podemos trabajar con más de dos símbolos.
+- Podemos trabajar con más de dos símbolos
+- Codificamos los problemas de la forma usual
 </aside>
 
 ## ¿Qué es una puerta clásica?
@@ -77,8 +84,7 @@ Específicamente,
 3. si $v \in V$ es una salida, $\operatorname{deg}_{\operatorname{in}}(v) = 1$ y $\operatorname{deg}_{\operatorname{out}}(v) = 0$.
 
 - En principio las funciones asociadas a las puertas podrían no ser simétricas y habría que añadir también una ordenación de las aristas que inciden en cada puerta (omitimos esto en la definición)
-
-- No especificamos qué son las puertas; en el futuro serán otras cosas.
+- Podemos medir aparte del tamaño, la «profundidad», que sirve para el paralelismo.
 </aside>
 
 ## Conjunto universal
@@ -103,6 +109,7 @@ $\mathcal{B} = \{\operatorname{NAND},\operatorname{FANOUT}\}$ es universal.
 
 <aside class="notes">
 - Los circuitos respecto de esa base se llaman *monótonos*.
+- La clase $\mathsf{AC}^0$ se define a partir de circuitos monótonos; algunos teoremas relativizados pueden transformarse en teoremas no relativizados de esta clase.
 - La clasificación completa de las posibles bases viene dada por el retículo de Post.
 </asides>
 
@@ -115,6 +122,10 @@ La puerta *Toffoli* se define $$\operatorname{TOFFOLI}(x,y,z) = (x,y,z \oplus (x
 :::{.proposition}
 La puerta lógica de Toffoli junto con las puertas ancilla y la puerta DESCARTA forma una base universal.
 :::
+
+<aside class="notes">
+- $\oplus$ es la operación XOR
+</aside>
 
 ## Familias de circuitos
 
@@ -314,6 +325,7 @@ wire :: Qubit -> Circ Qubit
 wire x = do
   pure x
 ```
+<span style="font-size:0.5em">[Clasical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
 :::
 :::{}
 ![](img/wire.png)
@@ -352,6 +364,7 @@ nand (x,y) = do
   qdiscard (x,y)
   pure z
 ```
+<span style="font-size:0.5em">[Clasical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
 :::
 :::{}
 ![](img/nand.png)
@@ -373,6 +386,7 @@ fanout x = do
   qdiscard y
   pure (x, z)
 ```
+<span style="font-size:0.5em">[Clasical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
 :::
 :::{}
 ![](img/fanout.png)
@@ -391,6 +405,7 @@ notCirc x = do
   y <- nand (x,x')
   pure y
 ```
+<span style="font-size:0.5em">[Clasical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
 :::
 :::{}
 ![](img/not.png)
@@ -411,6 +426,7 @@ boolean_xnor (x,y) =
 xnor :: (Qubit,Qubit) -> Circ Qubit
 xnor = unpack template_boolean_xnor
 ```
+<span style="font-size:0.5em">[Clasical.hs](https://github.com/mx-psi/libreim-quantum/blob/master/diagrams/Classical.hs)</span>
 :::
 :::{}
 ![](img/xnor.png)
@@ -429,8 +445,8 @@ xnor = unpack template_boolean_xnor
 ***
 
 ```haskell
-deustch :: ((Qubit,Qubit) -> Circ (Qubit,Qubit)) -> Circ Bit
-deustch oracle = do
+deutsch :: ((Qubit,Qubit) -> Circ (Qubit,Qubit)) -> Circ Bit
+deutsch oracle = do
   (x,y) <- qinit (False,True)
   (x,y) <- map_hadamard (x,y)
   (x,y) <- oracle (x,y)
@@ -439,6 +455,7 @@ deustch oracle = do
   qdiscard y
   pure z
 ```
+<span style="font-size:0.5em">[Deutsch.hs](https://github.com/mx-psi/libreim-quantum/blob/master/deutsch/Deutsch.hs)</span>
 
 ## `QShape`
 
@@ -461,12 +478,13 @@ data Oracle qa = Oracle {
   circuit :: (qa,Qubit) -> Circ (qa,Qubit)
   }
 ```
+<span style="font-size:0.5em">[Oracle.hs](https://github.com/mx-psi/libreim-quantum/blob/master/src/Oracle.hs)</span>
 
 ****
 
 ```haskell
-deustchJozsa :: (QShape ba qa ca) => Oracle qa -> Circ ca
-deustchJozsa oracle = do
+deutschJozsa :: (QShape ba qa ca) => Oracle qa -> Circ ca
+deutschJozsa oracle = do
   (x, y) <- qinit $ (qc_false (shape oracle), True)
   (x, y) <- map_hadamard (x, y)
   (x, y) <- boxedOracle (x, y)
@@ -475,6 +493,7 @@ deustchJozsa oracle = do
   qdiscard y
   pure z
 ```
+<span style="font-size:0.5em">[Deutsch.hs](https://github.com/mx-psi/libreim-quantum/blob/master/deutsch/Deutsch.hs)</span>
 
 # Fin
 
