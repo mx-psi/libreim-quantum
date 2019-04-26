@@ -154,7 +154,7 @@ Con aleatoriedad, el estado será una distribución sobre $\mathbb{B}$.
 
 :::{.example}
 Un bit aleatorio es un vector con norma 1 de un espacio vectorial real $R$ con base $\{| 0 \rangle, | 1 \rangle\}$,
-$$a |0\rangle + b |1 \rangle,\qquad |a| + |b| = 1$$
+$$a |0\rangle + b |1 \rangle,\qquad a + b = 1, a,b \geq 0$$
 :::
 
 Si tenemos $n$ bits aleatorios, el espacio de estados es $R^{\otimes n}$.
