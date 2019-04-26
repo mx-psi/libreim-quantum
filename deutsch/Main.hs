@@ -62,8 +62,8 @@ main = do
     Left err -> reportErr err -- there has been an error
     Right oracle -> do
       -- Preview the circuit
-      captureTo "deustch.pdf" $ print_generic PDF (deustchJozsa oracle)
+      captureTo "deutsch.pdf" $ print_generic PDF (deutschJozsa oracle)
 
-      -- Run Deustch-Jozsa algorithm
+      -- Run Deutsch-Jozsa algorithm
       oracleType <- getType oracle
       putStrLn $ "Oracle type: " ++ show oracleType

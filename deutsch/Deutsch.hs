@@ -23,8 +23,8 @@ data OracleType =
 -- | Implements the Deustch algorithm.
 --  Given an oracle computes the circuit of Deutsch algorithm
 -- (see generalized version at `deustchJozsa`)
-deustch :: ((Qubit,Qubit) -> Circ (Qubit,Qubit)) -> Circ Bit
-deustch oracle = do
+deutsch :: ((Qubit,Qubit) -> Circ (Qubit,Qubit)) -> Circ Bit
+deutsch oracle = do
   -- Initialize x (to False) and y (to True)
   (x,y) <- qinit (False,True)
 
@@ -46,8 +46,8 @@ deustch oracle = do
 
 -- | Implements the Deustch-Jozsa algorithm.
 --  Given an oracle computes the circuit of Deutsch-Jozsa algorithm
-deustchJozsa :: (QShape ba qa ca) => Oracle qa -> Circ ca
-deustchJozsa oracle = do
+deutschJozsa :: (QShape ba qa ca) => Oracle qa -> Circ ca
+deutschJozsa oracle = do
   -- Initialize x (to False) and y (to True)
   (x, y) <- qinit $ (qc_false (shape oracle), True)
 
@@ -71,10 +71,10 @@ deustchJozsa oracle = do
 getType :: Oracle [Qubit] -> IO OracleType
 getType oracle = do
   -- The Deutsch-Josza circuit for the given oracle
-  let deustchCircuit = deustchJozsa oracle
+  let deutschCircuit = deutschJozsa oracle
 
   -- Simulate Deustch-Jozsa circuit
-  result <- run_generic_io (0 :: Double) deustchCircuit
+  result <- run_generic_io (0 :: Double) deutschCircuit
 
   -- Print list of measured results
   print result
